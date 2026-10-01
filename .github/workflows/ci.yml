@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Unit tests (stdlib unittest, no dependencies)
+        run: python -m unittest discover -s tests -v
+
+      - name: Smoke test - examples/before must be BLOCKED (exit 1)
+        run: |
+          set +e
+          PYTHONPATH=src python -m deliverable_selfcheck \
+            --dir examples/before \
+            --required-file examples/required_c5.txt > before.txt 2>&1
+          code=$?
+          set -e
+          cat before.txt
+          if [ "$code" -ne 1 ]; then
+            echo "::error::expected exit 1 for examples/before, got $code"
+            exit 1
+          fi
+
+      - name: Smoke test - examples/after must be READY (exit 0)
+        run: |
+          set +e
+          PYTHONPATH=src python -m deliverable_selfcheck \
+            --dir examples/after \
+            --required-file examples/required_c5.txt > after.txt 2>&1
+          code=$?
+          set -e
+          cat after.txt
+          if [ "$code" -ne 0 ]; then
+            echo "::error::expected exit 0 for examples/after, got $code"
+            exit 1
+          fi
+
+      - name: Smoke test - a colon in a submission field must be caught
+        run: |
+          set +e
+          PYTHONPATH=src python -m deliverable_selfcheck \
+            --dir examples/after \
+            --required-file examples/required_c5.txt \
+            --title "C5 GitHub Repository: deliverable-selfcheck" > title.txt 2>&1
+          code=$?
+          set -e
+          cat title.txt
+          if [ "$code" -ne 1 ]; then
+            echo "::error::expected exit 1 for a colon-form title, got $code"
+            exit 1
+          fi

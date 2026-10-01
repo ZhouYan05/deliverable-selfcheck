@@ -1,0 +1,24 @@
+# deliverable-selfcheck · 清单样例（多挑战对照）
+#
+# 每行一个关键字（英文逗号分隔）；`#` 开头为注释，空行忽略。
+# 关键字里的 `*` 会被工具自动剥离，它不是通配符语法。
+#
+# 用法：
+#   deliverable-selfcheck --dir . --required-file examples/required_examples.txt
+#
+# ---------------------------------------------------------------
+# English: one keyword list per line (ASCII commas). Lines starting
+# with `#` are comments. `*` is stripped by the tool; it is NOT a glob.
+# ---------------------------------------------------------------
+
+# Elite20 · C4 技能分享与传播
+*skill说明*,*.skill,*教学说明*,*demo*,*AI日志*
+
+# Elite20 · C5 GitHub Repository
+README.md,*repo链接*,*AI日志*,*拿来说明*
+
+# Elite20 · C6（示例：发布与传播）
+*发布*,*传播*,*AI日志*
+
+# 通用最小集（任何"要交 README 和日志"的场景）
+README.md,*AI日志*

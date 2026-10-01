@@ -1,0 +1,8 @@
+# deliverable-selfcheck · 清单样例：C5「GitHub Repository」
+# 每行一个关键字（逗号分隔）；# 开头为注释，空行忽略。
+#
+# 用法：
+#   deliverable-selfcheck --dir . --required-file examples/required_c5.txt
+#
+# C5 平台要求的交付物关键字（注意 * 由工具自动剥离，不是通配符语法）
+README.md,*repo链接*,*AI日志*,*拿来说明*

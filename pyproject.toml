@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deliverable-selfcheck"
+version = "1.0.0"
+description = "提交前交付物自检器：确认交付物齐全，并预警会被平台『字面子串』规则漏判的文件名。"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "ZhouYan05" }]
+keywords = ["edu", "self-check", "deliverable", "cli", "zero-dependency"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+deliverable-selfcheck = "deliverable_selfcheck.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ZhouYan05/deliverable-selfcheck"
+Repository = "https://github.com/ZhouYan05/deliverable-selfcheck"
+Issues = "https://github.com/ZhouYan05/deliverable-selfcheck/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
